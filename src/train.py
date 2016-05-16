@@ -86,7 +86,7 @@ def train():
         return predictions
 
     start_time = time.time()
-    print((FLAGS.max_epochs * train_size) // batch_size)
+#    print((FLAGS.max_epochs * train_size) // batch_size)
     with tf.Session(config=tf.ConfigProto(log_device_placement=FLAGS.log_device_placement)) as sess:
         sess.run(init)
         for step in xrange(int(FLAGS.max_epochs * train_size) // batch_size):
@@ -118,7 +118,9 @@ def train():
             if step >= patience:
                 saver.save(sess, model_save_file, global_step = step)
                 break
-            if (step +1) == (FLAGS.max_epochs * train_size) // bamodel_save_fileodel_save_file, global_step = step)
+            if (step +1) == (FLAGS.max_epochs * train_size) // batch_size:
+                saver.save(sess, model_save_file, global_step = step)
+
 
 def main(argv=None):
     train()
