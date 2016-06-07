@@ -10,8 +10,7 @@ import numpy as np
 from sklearn.utils import shuffle
 from six.moves import xrange  # pylint: disable=redefined-builtin
 import tensorflow as tf
-
-import deepModel
+from deepModel import *
 import mrcReader
 
 FLAGS = tf.app.flags.FLAGS
@@ -21,11 +20,11 @@ tf.app.flags.DEFINE_integer('max_epochs', 300,
 tf.app.flags.DEFINE_boolean('log_device_placement', False,
                             """Whether to log device placement.""")
 
-batch_size = deepModel.batch_size
-num_class = deepModel.num_class
-image_size = deepModel.image_size
-train_size = deepModel.num_examples_train
-eval_size = deepModel.num_examples_eval
+batch_size = 60
+num_class = 2
+image_size = 60
+train_size = 1980
+eval_size = 218
 
 eval_frequency = train_size // batch_size
 
@@ -56,12 +55,13 @@ def train():
 
 #        deepModel.variable_init()
     global_step = tf.Variable(0, trainable=False)
-    logits = deepModel.inference(train_data_node, train=True)
-    loss, pred = deepModel.loss(logits, train_label_node)
-    opt, lr = deepModel.train(loss, global_step)
+    deepmodel = DeepModel(image_size, num_class, batch_size, train_size, eval_size)
+    logits = deepmodel.inference(train_data_node, train=True)
+    loss, pred = deepmodel.loss(logits, train_label_node)
+    opt, lr = deepmodel.train(loss, global_step)
 
-    eval_logits = deepModel.inference(eval_data_node, train=False)
-    eval_pred = deepModel.loss(eval_logits, None) 
+    eval_logits = deepmodel.inference(eval_data_node, train=False)
+    eval_pred = deepmodel.loss(eval_logits, None) 
 
     saver = tf.train.Saver(tf.all_variables())
 

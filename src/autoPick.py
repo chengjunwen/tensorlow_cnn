@@ -11,9 +11,9 @@ import tensorflow as tf
 import deepModel
 import mrcReader
 
-batch_size = deepModel.batch_size
-image_size = deepModel.image_size
-num_class = deepModel.num_class
+batch_size = 60
+image_size = 60
+num_class = 2
 test_size = 218
 
 checkpoint_dir = '../result'
@@ -31,8 +31,9 @@ def test():
                     tf.float32,
                     shape=(batch_size, image_size, image_size, 1)
     )
-    logits = deepModel.inference(test_data_node, train=False)
-    pred = deepModel.loss(logits, None)
+    deepmodel = DeepModel(image_size, num_class, batch_size)
+    logits = deepmodel.inference(test_data_node, train=False)
+    pred = deepmodel.loss(logits, None)
 
     def test_in_batch(data, sess):
         size = test_size
