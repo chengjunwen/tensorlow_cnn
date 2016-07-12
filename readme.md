@@ -1,6 +1,6 @@
 data : source data
 result: model save path
-	里面含有3个训练模型结果存储文件，
+	里面含有3个训练模型结果存储文件
 
 	默认加载模型时用到checkpoint，checkpoint 对应的 cnn_pickleModel1.ckpt-9899
 
