@@ -10,7 +10,7 @@ result: model save path
 src: python script
 
 ### deepModel.py
- 	
+
 	模型基本框架， 以及数据和模型的各种参数，需要调参时调整该脚本里的参数
 	数据参数：
 		image_size, 
@@ -32,6 +32,3 @@ src: python script
 	提前推出机制参数 
 
 
-### autoPick.py
-
-	loadData 部分需要更改， 测试时暂时使用的 valid 数据
